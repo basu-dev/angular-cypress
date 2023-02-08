@@ -1,7 +1,10 @@
 /// <reference types="cypress" />
-describe('Test', () => {
-    it('Type in form elements and click submit', () => {
+describe('Form Layout Page', () => {
+    beforeEach(() => {
         cy.visit('/');
+    });
+
+    it('Type in form elements and click submit', () => {
         cy.contains('a', 'Form Layout').click();
         cy.contains('.card h5', 'Inline').siblings('.formgroup-inline')
             .then(form => {
@@ -12,13 +15,20 @@ describe('Test', () => {
             });
     });
 
-    it.only('Select Dropdown', () => {
-        cy.visit('/');
+    it.only('Select Dropdown Should Work', () => {
         cy.contains('a', 'Form Layout').click();
         cy.contains('.card h5', 'Advanced').siblings('.grid').then(form => {
-            const selectInput = form.find('p-dropdown');
-            cy.wrap(selectInput).click();
-            // cy.get('p-overlay [target="@parent"]');
+            cy.wrap([0, 1, 2]).each((_, index) => {
+                const selectInput = form.find('p-dropdown');
+                cy.wrap(selectInput).click();
+                cy.get('p-overlay[ng-reflect-target="@parent"]').then(overlay => {
+                    cy.wrap(overlay).get('p-dropdownitem').eq(index).then(ddElement => {
+                        let textContent = ddElement.find('span').text();
+                        cy.wrap(ddElement).click();
+                        cy.wrap(selectInput).find('.p-dropdown-label').invoke('text').should('contain', textContent);
+                    });
+                });
+            });
         });
     });
 });
