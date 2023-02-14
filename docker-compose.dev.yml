@@ -15,10 +15,13 @@ services:
       - mongo-network
     volumes:
       - ./server:/home/app
+      - /usr/local/mongodb:/todo
   mongodb:
     networks:
       - mongo-network
     image: mongo
+    volumes:
+      - ./server/mongodb-data:/data/db
     ports:
       - 27017:27017
     environment:

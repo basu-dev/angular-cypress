@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ $1 = "start-dev" ]; then
+    docker compose -f docker-compose.dev.yml up
+fi
+if [ $1 = "start-prod" ]; then 
+    docker compose -f docker-compose.yml up
+fi
+if [ $1 = "stop-dev" ]; then 
+    docker compose -f docker-compose.dev.yml down
+fi
+if [ $1 = "stop-prod" ]; then 
+    docker compose -f docker-compose.yml down
+fi
