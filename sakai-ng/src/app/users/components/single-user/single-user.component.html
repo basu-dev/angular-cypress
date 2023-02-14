@@ -1,0 +1,18 @@
+<div class="flex bg-white p-3 border-radius-sm gap-3 align-items-center" *ngIf="user">
+    <div>
+        <p-avatar [size]="'large'" [shape]="'circle'" [label]="startingLetter "></p-avatar>
+    </div>
+    <div>
+        <h6 class="mb-2">{{user.name}}</h6>
+        <div class="flex gap-3 align-items-center">
+            <span *ngIf="user.email">
+                <i class="pi pi-envelope mr-1"></i>
+                <span>{{user.email}}</span>
+            </span>
+            <span>
+                <i class="pi pi-user mr-1"></i>
+                <span>{{user.age}}</span>
+            </span>
+        </div>
+    </div>
+</div>

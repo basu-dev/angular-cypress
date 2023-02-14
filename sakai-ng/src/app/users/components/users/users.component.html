@@ -1,0 +1,42 @@
+<form [formGroup]="form" class="card p-fluid">
+    <h5>Add User</h5>
+
+    <div class="field">
+        <c-form-error>
+            <label htmlFor="name1" cLabel>Name</label>
+            <input pInputText formControlName="name" id="name1" type="text" />
+        </c-form-error>
+    </div>
+
+    <div class="field">
+        <c-form-error>
+            <label cLabel htmlFor="email1">Email</label>
+            <input pInputText id="email1" formControlName="email" type="text" />
+
+        </c-form-error>
+    </div>
+
+    <div class="field">
+        <c-form-error>
+            <label cLabel htmlFor="age1" cLabel>Age</label>
+            <input pInputText id="age1" formControlName="age" type="number" />
+        </c-form-error>
+    </div>
+
+    <button type="button" (click)="addUser()" class="w-full" pButton label="Submit"></button>
+</form>
+
+<ng-container *ngIf="users$ | async as users">
+    <div class="flex justify-content-between mb-3">
+        <h4 class="my-3">Users ({{users.length}})</h4>
+        <div class="flex align-items-center gap-3">
+            <input type="text" placeholder="Search By Name" pInputText
+                (keyup)="searchInput$.next($any($event).target.value)">
+            <button (click)="refresh$.next()" class="btn-reset">
+                <i class="pi pi-refresh"></i>
+            </button>
+        </div>
+    </div>
+
+    <app-single-user class="block mb-3" [user]="user" *ngFor="let user of users"></app-single-user>
+</ng-container>

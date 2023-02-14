@@ -1,0 +1,34 @@
+version: '3'
+networks:
+  mongo-network:
+    driver: bridge
+services:
+  users-server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongodb
+    networks:
+      - mongo-network
+    volumes:
+      - ./server:/home/app
+  mongodb:
+    networks:
+      - mongo-network
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+  angular-app:
+    build:
+      context: ./sakai-ng
+      dockerfile: Dockerfile.dev
+    ports:
+      - 4200:4200
+    volumes:
+      - ./sakai-ng:/app
