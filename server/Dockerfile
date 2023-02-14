@@ -1,7 +1,12 @@
 FROM node:18-alpine
 
-RUN mkdir -p /home/app
+ARG WORK_DIR=/home/app
+RUN mkdir -p ${WORK_DIR}
+WORKDIR ${WORK_DIR}
+
+COPY package*.json .
+RUN npm i
 
 COPY . /home/app
 
-CMD ["node","/home/app/index.js"]
+CMD npm start

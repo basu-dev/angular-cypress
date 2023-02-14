@@ -1,0 +1,39 @@
+version: "3"
+services:
+  # front-end
+  nginx-frontend:
+    restart: always
+    build:
+      context: ./sakai-ng
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+  # server
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongodb
+    networks:
+      - mongo-network
+
+  # mongodb 
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - ./server/mongodb-data:/data/db
+    networks:
+      - mongo-network
+
+networks:
+  mongo-network:
+    driver: bridge
