@@ -3,16 +3,16 @@
 if [ -z "$1" ];then
     echo "\nValid arguments are start-dev, stop-dev, start-prod and stop-prod\n"
 
-    elif [ "$1" = "start-dev" ]; then
+    elif [ "$1" = "dev" ]; then
         docker compose -f docker-compose.dev.yml up $2 $3 $4
 
-    elif [ "$1" = "start-prod" ]; then 
+    elif [ "$1" = "prod" ]; then 
         docker compose -f docker-compose.yml up $2 $3 $4
 
-    elif [ "$1" = "stop-dev" ]; then 
+    elif [ "$1" = "dev-stop" ]; then 
         docker compose -f docker-compose.dev.yml down $2 $3 $4
 
-    elif [ "$1" = "stop-prod" ]; then 
+    elif [ "$1" = "prod-stop" ]; then 
         docker compose -f docker-compose.yml down $2 $3 $4
 
     else 
